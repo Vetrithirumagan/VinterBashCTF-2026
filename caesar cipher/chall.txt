@@ -1,0 +1,18 @@
+╔════════════════════════════════════════════════════════════════╗
+║           CAESAR CIPHER DECRYPTION CHALLENGE                   ║
+╚════════════════════════════════════════════════════════════════╝
+
+CHALLENGE DESCRIPTION:
+An ancient message has been intercepted using a classic Caesar cipher.
+Your task is to decrypt the message and find the flag.
+
+DIFFICULTY: Easy
+POINTS: 100
+
+═══════════════════════════════════════════════════════════════════
+
+ENCRYPTED MESSAGE:
+
+Pm fvb dhuuh slhyu jyfwav zahya dpao jhlzhy jpwoly, mshn: CIJam{J4L5HY_J1WO3Y_YBS35}
+
+═══════════════════════════════════════════════════════════════════

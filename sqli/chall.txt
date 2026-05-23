@@ -1,2 +1,0 @@
-
-Need to build a simple sqli challenge

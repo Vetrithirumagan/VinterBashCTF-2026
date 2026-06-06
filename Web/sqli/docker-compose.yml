@@ -20,6 +20,9 @@ services:
     container_name: sqli-ctf-frontend
     ports:
       - "3000:3000"
+    environment:
+      - BACKEND_URL=http://backend:5000
+      # - BACKEND_URL=http://${SERVER_IP:-localhost}:5000
     depends_on:
       - backend
     networks:

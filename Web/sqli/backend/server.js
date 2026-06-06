@@ -29,29 +29,25 @@ function initializeDatabase() {
       id INTEGER PRIMARY KEY,
       username TEXT UNIQUE,
       password TEXT,
-      email TEXT
-    )
-  `);
-
-  // Create secrets table (contains the flag)
-  db.run(`
-    CREATE TABLE IF NOT EXISTS secrets (
-      id INTEGER PRIMARY KEY,
-      username TEXT,
-      password TEXT,
+      email TEXT,
       flag TEXT
     )
-  `);
-
-  // Insert sample users
-  db.run(`INSERT OR IGNORE INTO users (id, username, password, email) VALUES (1, 'admin', 'admin123', 'admin@ctf.local')`);
-  db.run(`INSERT OR IGNORE INTO users (id, username, password, email) VALUES (2, 'user', 'password123', 'user@ctf.local')`);
-
-  // Insert flag into secrets table
-  db.run(`INSERT OR IGNORE INTO secrets (id, username, password, flag) VALUES (1, 'admin', 'super_secret', 'FLAG{SQL_INJ3CT10N_M4ST3R}')`);
+  `, (err) => {
+    if (err) {
+      console.error('Error creating users table:', err);
+    } else {
+      // Insert sample users after table is created
+      db.run(`INSERT OR IGNORE INTO users (id, username, password, email, flag) VALUES (1, 'admin', 'Vetri.123@VinterBashCTF@FirstTime', 'admin@ctf.local', 'VBCtf{5QL_iNJec7I0N_15_A1WaYS_fUN}')`, (err) => {
+        if (err) console.error('Error inserting admin:', err);
+      });
+      db.run(`INSERT OR IGNORE INTO users (id, username, password, email, flag) VALUES (2, 'user', 'password123', 'user@ctf.local', 'user doesn''t have enough permission to store flag')`, (err) => {
+        if (err) console.error('Error inserting user:', err);
+      });
+    }
+  });
 }
 
-// VULNERABLE ENDPOINT - SQL Injection vulnerability
+
 app.post('/api/login', (req, res) => {
   const { username, password } = req.body;
 
@@ -59,7 +55,6 @@ app.post('/api/login', (req, res) => {
     return res.status(400).json({ success: false, message: 'Username and password required' });
   }
 
-  // VULNERABLE: String concatenation without sanitization
   const query = `SELECT * FROM users WHERE username = '${username}' AND password = '${password}'`;
 
   console.log('Executing query:', query);
@@ -71,19 +66,31 @@ app.post('/api/login', (req, res) => {
     }
 
     if (row) {
-      return res.json({ success: true, message: 'Login successful', user: row });
+      const response = {
+        success: true,
+        message: 'Login successful',
+        user: {
+          id: row.id,
+          username: row.username,
+          email: row.email
+        }
+      };
+
+      if (row.username === 'admin') {
+        response.flag = row.flag;
+      }
+
+      return res.json(response);
     } else {
       return res.status(401).json({ success: false, message: 'Invalid credentials' });
     }
   });
 });
 
-// VULNERABLE ENDPOINT - Another SQL injection point
 app.get('/api/user/:username', (req, res) => {
   const { username } = req.params;
   console.log('Received request for user:', username);
 
-  // VULNERABLE: String concatenation without sanitization
   const query = `SELECT * FROM users WHERE username = '${username}'`;
 
   console.log('Executing query:', query);
@@ -95,7 +102,11 @@ app.get('/api/user/:username', (req, res) => {
     }
 
     if (row) {
-      return res.json(row);
+      const response = {
+        username: row.username,
+        email: row.email
+      };
+      return res.json(response);
     } else {
       return res.status(404).json({ error: 'User not found' });
     }
@@ -112,10 +123,8 @@ app.get('/', (req, res) => {
   res.json({ message: 'SQL Injection CTF Backend', version: '1.0.0' });
 });
 
-// Start server
-app.listen(PORT, () => {
-  console.log(`🚀 Server running on http://localhost:${PORT}`);
-  console.log('⚠️  WARNING: This server contains intentional vulnerabilities for educational purposes only!');
+app.listen(PORT, '0.0.0.0', () => {
+  console.log(`Server running on port ${PORT}`);
 });
 
 // Graceful shutdown

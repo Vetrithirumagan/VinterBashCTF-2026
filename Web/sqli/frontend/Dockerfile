@@ -15,12 +15,11 @@ COPY src ./src
 # Build the React app
 RUN npm run build
 
-# Install serve to run production build
-RUN npm install -g serve
+# Copy server file with proxy middleware
+COPY server.js .
 
 # Expose port
 EXPOSE 3000
 
-# Start the production build with proxy
-ENV DANGEROUSLY_DISABLE_HOST_CHECK=true
-CMD ["serve", "-s", "build", "-l", "3000", "--cors"]
+# Start the Express server with proxy middleware
+CMD ["node", "server.js"]

@@ -9,7 +9,7 @@ services:
     environment:
       - NODE_ENV=production
     volumes:
-      - ./backend/database.db:/app/database.db
+      - db-data:/app
     networks:
       - sqli-network
 
@@ -28,3 +28,6 @@ services:
 networks:
   sqli-network:
     driver: bridge
+
+volumes:
+  db-data:

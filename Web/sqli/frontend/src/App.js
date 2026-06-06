@@ -1,19 +1,9 @@
 import React, { useState } from 'react';
 import './App.css';
 
-// In Docker, use backend service name. In local dev, use localhost
-const getApiUrl = () => {
-  // Check if we're in Docker by looking at the hostname
-  const isDocker = window.location.hostname === 'localhost' ? false : true;
-  
-  if (isDocker) {
-    return 'http://backend:5000';
-  }
-  
-  return 'http://localhost:5000';
-};
-
-const API_URL = getApiUrl();
+// Use relative paths - nginx will proxy to backend
+// This works in both Docker and local dev
+const API_URL = '';
 
 function App() {
   const [username, setUsername] = useState('');
@@ -29,7 +19,7 @@ function App() {
     setResponse(null);
 
     try {
-      const res = await fetch(`${API_URL}/api/login`, {
+      const res = await fetch('/api/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -61,7 +51,7 @@ function App() {
     setResponse(null);
 
     try {
-      const res = await fetch(`${API_URL}/api/user/${username}`);
+      const res = await fetch(`/api/user/${username}`);
       const data = await res.json();
       setResponse(data);
 
@@ -155,17 +145,6 @@ function App() {
             )}
           </div>
         )}
-
-        <div className="card hints-card">
-          <h3>💡 Tips for Exploitation</h3>
-          <ul>
-            <li>Try SQL injection payloads in the username or password fields</li>
-            <li>Experiment with characters like: <code>'</code>, <code>"</code>, <code>--</code>, <code>;</code></li>
-            <li>Common payloads: <code>admin' --</code>, <code>' OR '1'='1</code></li>
-            <li>Use UNION SELECT to extract data from other tables</li>
-            <li>The flag is in a table called 'secrets'</li>
-          </ul>
-        </div>
       </div>
     </div>
   );

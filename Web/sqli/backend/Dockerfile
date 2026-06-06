@@ -14,5 +14,5 @@ COPY server.js .
 # Expose port
 EXPOSE 5000
 
-# Start server
-CMD ["npm", "start"]
+# Start server - run node directly instead of through npm
+CMD ["node", "server.js"]

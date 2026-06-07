@@ -1,0 +1,36 @@
+services:
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: sqli-ctf-backend
+    ports:
+      - "5000:5000"
+    environment:
+      - NODE_ENV=production
+    volumes:
+      - db-data:/app
+    networks:
+      - sqli-network
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: sqli-ctf-frontend
+    ports:
+      - "3000:3000"
+    environment:
+      - BACKEND_URL=http://backend:5000
+      # - BACKEND_URL=http://${SERVER_IP:-localhost}:5000
+    depends_on:
+      - backend
+    networks:
+      - sqli-network
+
+networks:
+  sqli-network:
+    driver: bridge
+
+volumes:
+  db-data:

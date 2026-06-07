@@ -1,1 +1,22 @@
-need to build a challenge where the answer is the google codes of our school
+# Lost Coordinates
+
+Legends speak of a mark left upon every corner of the world, a silent signature woven into the fabric of the maps we trust every day.
+Most walk over it without a second thought.
+Others spend their entire lives searching for clues hidden in plain sight.
+Yet for those who know where to look, the mark reveals itself: a unique code, bound to a single place and known only to those who seek it.
+Some say it was created to help travelers find their way.
+Others believe it is a modern relic, a digital coordinate etched into the landscape itself.
+Whatever the truth may be, one such code lies closer than you imagine—so close that every step of your journey begins from it.
+
+Your mission is simple: discover the **Google Plus Code** of the place legends speak about.
+Once found, enclose it within the sacred flag format:
+
+`VBCTF{PLUS_CODE}`
+
+No cryptography guards this secret. No firewall stands in your path. The answer has existed in plain sight from the very beginning, hidden among countless locations scattered across the world.
+
+Look not to distant lands or forgotten ruins. The coordinates you seek have been beneath your feet all along.
+
+The mark awaits.
+
+Good luck, explorer.

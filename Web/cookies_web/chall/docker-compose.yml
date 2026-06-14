@@ -1,0 +1,64 @@
+version: '3.8'
+
+services:
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: cookies-ctf-backend
+    ports:
+      - "5001:5001"
+    environment:
+      NODE_ENV: production
+      PORT: 5001
+      SECRET_KEY: super-secret-jwt-key-for-ctf
+    networks:
+      - cookies-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "node", "-e", "require('http').get('http://localhost:5001/api/health', (r) => {if (r.statusCode !== 200) throw new Error(r.statusCode)})"]
+      interval: 30s
+      timeout: 3s
+      retries: 3
+      start_period: 5s
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: cookies-ctf-frontend
+    ports:
+      - "3001:3001"
+    depends_on:
+      backend:
+        condition: service_healthy
+    networks:
+      - cookies-network
+    environment:
+      REACT_APP_API_URL: http://backend:5001
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:3001/"]
+      interval: 30s
+      timeout: 3s
+      retries: 3
+      start_period: 5s
+
+networks:
+  cookies-network:
+    driver: bridge
+
+# DISTINCT PORTS FOR SINGLE SERVER DEPLOYMENT
+# Cookies Web Challenge:
+#   - Frontend: http://localhost:3001
+#   - Backend: http://localhost:5000
+# 
+# SQLi Challenge (separate):
+#   - Frontend: http://localhost:3001
+#   - Backend: http://localhost:5001
+# 
+# Build images with: docker-compose build
+# Start services with: docker-compose up
+# Stop services with: docker-compose down
+# View logs with: docker-compose logs -f
+

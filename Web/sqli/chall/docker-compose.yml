@@ -1,3 +1,4 @@
+name: sqli-ctf
 services:
   backend:
     build:

@@ -1,5 +1,5 @@
 version: '3.8'
-
+name: cookies-ctf
 services:
   backend:
     build:
@@ -47,18 +47,4 @@ services:
 networks:
   cookies-network:
     driver: bridge
-
-# DISTINCT PORTS FOR SINGLE SERVER DEPLOYMENT
-# Cookies Web Challenge:
-#   - Frontend: http://localhost:3001
-#   - Backend: http://localhost:5000
-# 
-# SQLi Challenge (separate):
-#   - Frontend: http://localhost:3001
-#   - Backend: http://localhost:5001
-# 
-# Build images with: docker-compose build
-# Start services with: docker-compose up
-# Stop services with: docker-compose down
-# View logs with: docker-compose logs -f
 

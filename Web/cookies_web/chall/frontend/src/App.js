@@ -1,8 +1,24 @@
 import React from 'react';
+import { useState, useEffect } from 'react';
 import './App.css';
 
 function App() {
   const isAdmin = window.location.pathname === '/admin';
+  const [message, setMessage] = useState('');
+
+  useEffect(() => {
+    if (isAdmin) {
+      fetch('http://localhost:5001/admin')
+        .then(res => res.json())
+        .then(data => {
+          setMessage(data.message);
+        })
+        .catch(err => {
+          console.error(err);
+          setMessage('Backend unreachable');
+        });
+    }
+  }, [isAdmin]);
 
   if (isAdmin) {
     return (
@@ -28,7 +44,7 @@ function App() {
           </div>
 
           <p style={{ color: '#00d4ff', textAlign: 'center', margin: '20px 0' }}>
-            These robots guard secrets on the web. They follow robots.txt rules, but you ignored their warnings...
+            Note to self: Always use JWT tokens for storing important secrets. They are so secure and no one can decode them.
           </p>
 
           <div className="footer">

@@ -31,7 +31,7 @@ Disallow: /flag-endpoint
 const FLAG = 'VBCtf{cOokI3s_In_w3B_arE_iN73R3sTin6}';
 
 // Secret endpoint that returns the flag as a JWT cookie
-app.get('/api/secret-token', (req, res) => {
+app.get('/admin', (req, res) => {
   try {
     // Create JWT token with the flag
     const token = jwt.sign(
@@ -65,12 +65,12 @@ app.get('/api/secret-token', (req, res) => {
   }
 });
 
-// Alternative: Admin page hint
-app.get('/admin', (req, res) => {
-  res.json({
-    message: 'This is a restricted admin area. Hints: Check robots.txt for the real secret endpoint.'
-  });
-});
+// // Alternative: Admin page hint
+// app.get('/admin', (req, res) => {
+//   res.json({
+//     message: 'This is a restricted admin area. Hints: Check robots.txt for the real secret endpoint.'
+//   });
+// });
 
 // Decode JWT endpoint (helper for users)
 app.post('/api/decode-token', (req, res) => {

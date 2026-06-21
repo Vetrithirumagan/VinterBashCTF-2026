@@ -1,0 +1,27 @@
+The Forgotten Password
+
+Deep beneath an abandoned research facility,
+investigators discovered a terminal that had remained locked for years.
+
+According to old records,one of the lead engineers was obsessed with secrecy.
+Rather than storing valuable information in plain sight,
+he protected it behind a custom authentication program of his own design.
+
+Time has not been kind to the system.
+Documentation is gone, backups are corrupted, and nobody remembers the password.
+All that remains is the executable itself.
+
+The engineers who built the terminal were confident that no outsider could ever uncover its secret.
+After all, how could someone learn the correct password without knowing it beforehand?
+
+Yet confidence often leads to mistakes.
+
+Somewhere within the program lies everything you need to gain access.
+The password may not be as hidden as its creator believed,
+and the reward waiting behind it is worth the effort.
+
+Your mission is simple:
+
+Analyze the program, discover how it verifies input, and recover the secret hidden within.
+
+Good luck, investigator. The terminal has been waiting a long time for someone curious enough to look inside.
